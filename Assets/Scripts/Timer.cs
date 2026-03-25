@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using UnityEditor.Overlays;
 using UnityEngine;
 
-public class Timer
+
+public static class Timer
 {
 	private static readonly Stopwatch stopwatch = new();
 	private static  List<long> steps = new();
 
-	private List<long> previousSteps = new();
 
 	public static bool IsRunning
 	{
@@ -30,6 +31,7 @@ public class Timer
 	{
 		return steps[index] * 0.001f;
 	}
+
 
 	/// <summary>
 	/// Reset the timer and remove any steps.
@@ -57,13 +59,20 @@ public class Timer
 
 	public static void Save()
 	{
-		// TODO : save our time steps (line 7 of this script) inside a file.
-		Timer data = new Timer();
-		//data.steps = steps;
+        // TODO : save our time steps (line 7 of this script) inside a file.
+        string saveLocation = Application.persistentDataPath + "/Score.txt";
 
-		string json = JsonUtility.ToJson(data, true);
-		string path = Application.persistentDataPath + "/Score.json";
-		System.IO.File.WriteAllText( path, json );
+        //Timer dataScore = new Timer();
+		FileStream stream = new FileStream(saveLocation, FileMode.Create);
+		StreamWriter writer = new StreamWriter(stream);
+		foreach(long step in steps)
+		{
+			writer.WriteLine(step);
+		}
+		writer.Close();
+		stream.Close();
+
+		UnityEngine.Debug.Log("Score saved at" + saveLocation);
 	}
 
 	public static void Load()
@@ -71,16 +80,33 @@ public class Timer
 		// TODO : load our time steps from a file (if we have any)
 		// and store them inside our steps variable (line 7 of this script)
 		// to show them to the player before starting a race.
-		string path = Application.persistentDataPath + "/Score.json";
-		if (File.Exists(path))
+		string saveLocation = Application.persistentDataPath + "/Score.txt";
+
+		if (File.Exists(saveLocation))
 		{
-			string json = System.IO.File.ReadAllText(path);
-			Timer loadedData = JsonUtility.FromJson<Timer>(json);
-			//List<long> loadedListe = new List<long>(data.steps);
+			steps.Clear();
 
-			//Timer.List.previousSteps = loadedListe;
-		}
+            FileStream stream = new FileStream(saveLocation, FileMode.Create);
+            StreamReader reader = new StreamReader(stream);
 
-		
+			while (!reader.EndOfStream)
+			{
+				string line = reader.ReadLine();
+				if (long.TryParse(line, out long value))
+				{
+					steps.Add(value);
+				}
+			}
+
+			reader.Close();
+			stream.Close();
+
+            UnityEngine.Debug.Log("Score charged from" + saveLocation);
+        }
+		else
+		{
+            UnityEngine.Debug.Log("Aucune données");
+        }
+
 	}
 }
