@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground Particles
+  - Pieces
   layers:
   - Default
   - TransparentFX
