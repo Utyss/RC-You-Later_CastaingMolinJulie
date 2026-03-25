@@ -9,7 +9,7 @@ using UnityEngine;
 public static class Timer
 {
 	private static readonly Stopwatch stopwatch = new();
-	private static  List<long> steps = new();
+	public static  List<long> steps = new();
 
 
 	public static bool IsRunning
@@ -60,10 +60,10 @@ public static class Timer
 	public static void Save()
 	{
         // TODO : save our time steps (line 7 of this script) inside a file.
-        string saveLocation = Application.persistentDataPath + "/Score.txt";
+        string saveLocation = "D:\\CastaingMolinJulie\\oui\\RC-You-Later_CastaingMolinJulie" + "/Score.txt";
 
         //Timer dataScore = new Timer();
-		FileStream stream = new FileStream(saveLocation, FileMode.Create);
+        FileStream stream = new FileStream(saveLocation, FileMode.Create);
 		StreamWriter writer = new StreamWriter(stream);
 		foreach(long step in steps)
 		{
@@ -80,11 +80,10 @@ public static class Timer
 		// TODO : load our time steps from a file (if we have any)
 		// and store them inside our steps variable (line 7 of this script)
 		// to show them to the player before starting a race.
-		string saveLocation = Application.persistentDataPath + "/Score.txt";
+		string saveLocation = "D:\\CastaingMolinJulie\\oui\\RC-You-Later_CastaingMolinJulie" + "/Score.txt";
 
 		if (File.Exists(saveLocation))
 		{
-			steps.Clear();
 
             FileStream stream = new FileStream(saveLocation, FileMode.Create);
             StreamReader reader = new StreamReader(stream);
@@ -101,7 +100,15 @@ public static class Timer
 			reader.Close();
 			stream.Close();
 
-            UnityEngine.Debug.Log("Score charged from" + saveLocation);
+			string debugText = "";
+			foreach (long step in steps)
+			{
+				debugText += step + "\n";
+			}
+
+            UnityEngine.Debug.Log("Score charged from" + saveLocation + "\n voici les données: \n" + debugText);
+            steps.Clear();
+
         }
 		else
 		{
