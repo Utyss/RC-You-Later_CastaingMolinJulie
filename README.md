@@ -53,5 +53,10 @@ Il y a quelque assets dans le dossier des Models mais tu peux en importer d'autr
 
 Ce que tu a rajouté dans le projet :
 
-
-
+	j'ai fait une sauvegarde dans les fichiers du jeu, qui s'affiche dans le tableau des scores lorsqu'on charge la sauvegarde, avant de s'effacer lorsqu'on lance la course.
+	J'ai rajouté des boutons SAVE et LOAD pour interragir avec les sauvegardes à tout moment.
+	Un menu principal a été ajouté pour donner un aspect jeu, et pour rendre hommage au titre donné.
+	Des pièces ont été rajouté tout le long du niveau et même autour, pour rajouter un objectif aux joueurs. Les pièces ne sont pas impactées par les sauvegardes, puisqu'elles n'apportent pas véritablement de bonus, malheureusement.
+	Pour finir, un comptur de bonus a également été ajouté pour compter les pièces collectées.
+	
+	Ce devoir a été réalisé avec beaucoup de tutoriels Youtube, plus l'aide de Lily, Fiona et Méline pour comprendre comment corriger le reste et les bugs que j'avais.
